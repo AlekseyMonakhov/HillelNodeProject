@@ -1,0 +1,31 @@
+<form
+    action="/auth/login"
+    method="post"
+    class="login_form"
+>
+    <div>
+        <label for="login_email">Email</label>
+        <input
+            autocomplete="email"
+            type="email"
+            id="login_email"
+            name="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            placeholder="email"
+            required
+        />
+    </div>
+    <div>
+        <label for="login_password">Password</label>
+        <input
+            autocomplete="current-password"
+            type="password"
+            pattern="[a-zA-Z0-9]{8,}"
+            id="login_password"
+            placeholder="password"
+            name="password"
+            required
+        />
+    </div>
+    <button type="submit">Login</button>
+</form>

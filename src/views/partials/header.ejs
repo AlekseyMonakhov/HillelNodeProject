@@ -1,0 +1,14 @@
+<header class="header">
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/admin">Admin</a></li>
+            <li><a href="/my-posts">My posts</a></li>
+            <li>
+                <a href="<%= isAuth ? '/auth/logout' : '/auth'%>">
+                    <%= isAuth ? 'Logout' : 'Login' %>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>

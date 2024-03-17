@@ -1,0 +1,35 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('partials/head') %>
+    </head>
+    <body>
+        <%- include('partials/header') %>
+        <main class="auth_container">
+            <div class="toggle_container">
+                <input
+                    hidden
+                    type="radio"
+                    name="authType"
+                    value="login"
+                    id="login_input"
+                    checked
+                />
+                <label for="login_input"> Login </label>
+
+                <input
+                    hidden
+                    type="radio"
+                    name="authType"
+                    value="signup"
+                    id="register_input"
+                />
+
+                <label for="register_input"> Signup </label>
+            </div>
+            <%- include('components/loginForm') %> <%-
+            include('components/registerForm') %>
+        </main>
+    </body>
+</html>

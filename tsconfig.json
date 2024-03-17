@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ESNext", // Целевая версия ECMAScript
+        "module": "NodeNext", // Модульная система
+        "moduleResolution": "NodeNext",
+        "outDir": "./dist", // Папка для транспилированных файлов
+        "sourceMap": true, // Генерация исходных карт
+        "removeComments": true, // Удаление комментариев из выходного кода
+        "strict": true, // Включение строгих проверок типов
+        "esModuleInterop": true, // Позволяет использовать экспорт/импорт в стиле ES6
+        "resolveJsonModule": true, // Поддержка импорта .json файлов
+        "skipLibCheck": true, // Пропуск проверки типов в .d.ts файлах сторонних библиотек
+        "forceConsistentCasingInFileNames": true // Принудительное использование последовательных регистров в именах файлов
+    },
+    "include": ["src/**/*"], // Указание папки с исходным кодом
+    "exclude": ["node_modules", "dist"] // Исключение папок из процесса компиляции
+}

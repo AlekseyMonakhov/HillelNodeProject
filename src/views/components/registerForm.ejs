@@ -1,0 +1,33 @@
+<form
+    action="/auth/register"
+    method="post"
+    class="register_form"
+>
+    <div>
+        <label for="register_email">Email</label>
+        <input
+            autocomplete="email"
+            type="email"
+            id="register_email"
+            name="email"
+            placeholder="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            title="Please enter a valid email address."
+            required
+        />
+    </div>
+    <div>
+        <label for="register_password">Password</label>
+        <input
+            autocomplete="current-password"
+            type="password"
+            id="register_password"
+            pattern="[a-zA-Z0-9]{8,}"
+            name="password"
+            title="Password must be at least 8 characters long and contain at least one number and one letter."
+            placeholder="password"
+            required
+        />
+    </div>
+    <button type="submit">Register</button>
+</form>
