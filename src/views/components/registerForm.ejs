@@ -15,6 +15,7 @@
             title="Please enter a valid email address."
             required
         />
+        <p class="error_message"></p>
     </div>
     <div>
         <label for="register_password">Password</label>
@@ -22,12 +23,13 @@
             autocomplete="current-password"
             type="password"
             id="register_password"
-            pattern="[a-zA-Z0-9]{8,}"
+            pattern="(?=.*[a-zA-Z])(?=.*[0-9]).{8,}"
             name="password"
-            title="Password must be at least 8 characters long and contain at least one number and one letter."
+            title="Password must contain at least one letter, one number, and be at least 8 characters long."
             placeholder="password"
             required
         />
+        <p class="error_message"></p>
     </div>
     <button type="submit">Register</button>
 </form>

@@ -4,6 +4,9 @@ import routes from "./routes";
 import getUserFromCookie from "./middlewares/getUserFromCookie";
 import isUserAuth from "./middlewares/isUserAuth";
 import cookieParser from "cookie-parser";
+import errorHandler from "./controllers/error";
+import { NotFound } from "./errors";
+
 
 const app = express();
 
@@ -21,11 +24,13 @@ app.use(isUserAuth);
 
 app.use(routes);
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-    console.log(error);
-    res.status(500).json({ message: "Something went wrong" });
+app.all("*", (req: Request, res: Response, next: NextFunction) => {
+    console.log("Route not found");
+
+    next(new NotFound("Route not found"));
 });
 
+app.use(errorHandler);
 app.listen(3000, () => {
     console.log("Server is running on port 3000");
 });

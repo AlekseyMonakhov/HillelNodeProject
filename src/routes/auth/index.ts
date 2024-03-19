@@ -7,7 +7,10 @@ const router = express.Router();
 
 const authScema = z.object({
     email: z.string().email("Invalid email format"),
-    password: z.string().min(8),
+    password: z.string().regex(/(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/, {
+        message:
+            "Password must contain at least one letter, one number and be at least 8 characters long",
+    }),
 });
 
 router.post("/login", validate(authScema), loginUser);

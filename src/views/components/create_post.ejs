@@ -1,0 +1,33 @@
+<form
+    action="/test"
+    method="post"
+    class="create_post"
+>
+    <h2>Create Post</h2>
+    <div>
+        <button
+            type="button"
+            class="close_modal"
+        ></button>
+        <label for="create_post_title">Title</label>
+        <input
+            type="text"
+            id="create_post_title"
+            name="title"
+            placeholder="title"
+            required
+        />
+        <p class="error_message"></p>
+    </div>
+    <div>
+        <label for="create_post_content">Content</label>
+        <textarea
+            id="create_post_content"
+            name="content"
+            placeholder="content"
+            required
+        ></textarea>
+        <p class="error_message"></p>
+    </div>
+    <button type="submit">Create Post</button>
+</form>

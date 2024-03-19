@@ -1,9 +1,11 @@
-import { CookieOptions, Request, Response } from "express";
+import { CookieOptions, Request, Response, NextFunction } from "express";
 import prisma from "../prismaClient";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { COOKIE } from "../enum";
+import { BadRequest, ServerError } from "../errors";
+import UserService from "../service/userService";
 
 const cookieOptions: CookieOptions = {
     httpOnly: true,
@@ -11,19 +13,31 @@ const cookieOptions: CookieOptions = {
     secure: true,
 };
 
-export async function loginUser(req: Request, res: Response) {
+export async function loginUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
     const { email, password } = req.body;
     try {
-        const user = (await prisma.user.findUnique({
-            where: {
-                email,
-            },
-        })) as User;
+        const user = await UserService.getUserByEmail(email);
+
+        if (!user) {
+            return next(
+                new BadRequest([
+                    { path: ["email"], message: "Email does not exist" },
+                ])
+            );
+        }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {
-            return res.status(401).json({ message: "Invalid credentials" });
+            return next(
+                new BadRequest([
+                    { path: ["password"], message: "Invalid password" },
+                ])
+            );
         }
 
         const token = jwt.sign(
@@ -37,25 +51,32 @@ export async function loginUser(req: Request, res: Response) {
 
         res.cookie(COOKIE.TOKEN, token, cookieOptions);
 
-        res.redirect("/my-posts");
+        res.status(200).json({
+            message: "User registered successfully",
+            redirect: "/my-posts",
+        });
     } catch (error) {
         console.log(error);
-
-        res.status(401).json({ message: "Invalid credentials" });
+        next(
+            new ServerError("Ploblems while login user", (error as Error).stack)
+        );
     }
 }
 
-export async function registerUser(req: Request, res: Response) {
+export async function registerUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+) {
     const { email, password } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = await prisma.user.create({
-            data: {
-                email,
-                password: hashedPassword,
-                role: "USER",
-            },
+
+        const user = await UserService.createUser({
+            email,
+            password: hashedPassword,
+            role: "USER",
         });
 
         const token = jwt.sign(
@@ -69,28 +90,43 @@ export async function registerUser(req: Request, res: Response) {
 
         res.cookie(COOKIE.TOKEN, token, cookieOptions);
 
-        res.redirect("/my-posts");
+        res.status(200).json({
+            message: "User registered successfully",
+            redirect: "/my-posts",
+        });
     } catch (error) {
         console.log(error);
 
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === "P2002") {
-                return res
-                    .status(400)
-                    .json({ message: "Email already exists" });
+                return next(
+                    new BadRequest([
+                        { path: ["email"], message: "Email already exists" },
+                    ])
+                );
             }
         }
 
-        res.status(500).json({ message: "Something went wrong" });
+        next(
+            new ServerError(
+                "Ploblems while register user",
+                (error as Error).stack
+            )
+        );
     }
 }
 
-export function logoutUser(req: Request, res: Response) {
+export function logoutUser(req: Request, res: Response, next: NextFunction) {
     try {
         res.clearCookie(COOKIE.TOKEN);
         res.redirect("/");
     } catch (error) {
         console.log(error);
-        res.status(500).json({ message: "Something went wrong" });
+        next(
+            new ServerError(
+                "Ploblems while logout user",
+                (error as Error).stack
+            )
+        );
     }
 }

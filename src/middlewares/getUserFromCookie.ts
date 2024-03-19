@@ -14,9 +14,8 @@ function getUserFromCookie(req: Request, res: Response, next: NextFunction) {
             req.user = decoded;
         } catch (error) {
             console.log(error);
-
             res.clearCookie(COOKIE.TOKEN);
-            return res.redirect("/login");
+            return res.redirect("/");
         }
     }
 

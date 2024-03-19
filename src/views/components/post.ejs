@@ -1,0 +1,13 @@
+<article>
+    <h2><%= post.title %></h2>
+    <p><%= post.body %></p>
+    <time><%= post.created_at %></е>
+    <time><%= post.updated_at %></time>
+    <a href="/posts/<%= post.id %>">Show</a>
+    <a href="/posts/<%= post.id %>/edit">Edit</a>
+    <a
+        href="/posts/<%= post.id %>"
+        data-method="delete"
+        >Delete</a
+    >
+</article>

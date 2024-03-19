@@ -1,5 +1,7 @@
 import express from "express";
 const router = express.Router();
+import PostService from "../../service/postService";
+import { User } from "@prisma/client";
 
 router.get("/", (req, res) => {
     const isAuth = req.isUserAuthenticated;
@@ -11,30 +13,31 @@ router.get("/auth", (req, res) => {
     res.render("auth", { title: "Auth", isAuth });
 });
 
-router.get("/my-posts", (req, res) => {
+router.get("/my-posts", async (req, res) => {
     const isAuth = req.isUserAuthenticated;
 
     if (!isAuth) {
         return res.redirect("/");
     }
 
-    res.render("myPosts", { title: "My Posts", isAuth });
+    const user = req.user as User;
+    const posts = await PostService.getPostsByAuthorId(user.id);
+
+    res.render("myPosts", {
+        title: "My Posts",
+        isAuth,
+        posts: posts,
+    });
 });
 
 router.get("/admin", (req, res) => {
-    const isAuth = req.isUserAuthenticated;
-
-    if (!isAuth) {
-        return res.redirect("/");
-    }
-
     const isAdmin = req.user?.role === "ADMIN";
 
     if (!isAdmin) {
         return res.redirect("/");
     }
 
-    res.render("admin", { title: "Admin page", isAuth });
+    res.render("admin", { title: "Admin page", isAuth: true });
 });
 
 export default router;

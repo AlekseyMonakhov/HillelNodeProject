@@ -14,18 +14,21 @@
             placeholder="email"
             required
         />
+        <p class="error_message"></p>
     </div>
     <div>
         <label for="login_password">Password</label>
         <input
             autocomplete="current-password"
             type="password"
-            pattern="[a-zA-Z0-9]{8,}"
+            pattern="(?=.*[a-zA-Z])(?=.*[0-9]).{8,}"
+            title="Password must contain at least one letter, one number, and be at least 8 characters long."
             id="login_password"
             placeholder="password"
             name="password"
             required
         />
+        <p class="error_message"></p>
     </div>
     <button type="submit">Login</button>
 </form>

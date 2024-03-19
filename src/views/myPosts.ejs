@@ -3,9 +3,45 @@
 <html lang="en">
     <head>
         <%- include('partials/head') %>
+        <link
+            rel="stylesheet"
+            href="/css/posts.css"
+        />
+        <link
+            rel="stylesheet"
+            href="/css/create_post_modal.css"
+        />
+
+        <script
+            src="/js/post.js"
+            defer
+        ></script>
     </head>
     <body>
         <%- include('partials/header') %>
-        <h1>My posts</h1>
+        
+        <main class="my_posts">
+            <h1>My Posts</h1>
+            <section class="posts_container">
+                <% if (posts.length) { %>
+                    <% posts.forEach(post => { %>
+                        <% include('components/post', { post }) %>
+                    <% }) %>
+                <% } else { %>
+                    <div>
+                        <p>No posts yet</p>
+                        <button
+                            class="create_post_button"
+                        >
+                            Create Post
+                        </button>
+
+
+                        <dialog id="createPostDialog">
+                            <%- include('components/create_post') %>
+                        </dialog>
+                    </div>
+                <% } %>
+            </section>
     </body>
 </html>
