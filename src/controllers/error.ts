@@ -23,7 +23,7 @@ function errorHandler(
             return res.render("error", {
                 message: error.message,
                 title: "Unauthorized",
-                isAuth: req.isUserAuthenticated,
+                isAuth: Boolean(req.user),
             });
         }
 
@@ -31,7 +31,7 @@ function errorHandler(
             return res.render("error", {
                 message: error.message,
                 title: "Forbidden",
-                isAuth: req.isUserAuthenticated,
+                isAuth: Boolean(req.user),
             });
         }
 
@@ -39,7 +39,7 @@ function errorHandler(
             return res.render("error", {
                 message: error.message,
                 title: "Not found",
-                isAuth: req.isUserAuthenticated,
+                isAuth: Boolean(req.user),
             });
         }
 

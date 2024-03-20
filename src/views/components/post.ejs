@@ -1,13 +1,29 @@
-<article>
+<article
+    id="<%= post.id %>"
+    class="post"
+>
     <h2><%= post.title %></h2>
-    <p><%= post.body %></p>
-    <time><%= post.created_at %></е>
-    <time><%= post.updated_at %></time>
-    <a href="/posts/<%= post.id %>">Show</a>
-    <a href="/posts/<%= post.id %>/edit">Edit</a>
-    <a
-        href="/posts/<%= post.id %>"
-        data-method="delete"
-        >Delete</a
-    >
+    <p><%= post.content %></p>
+
+    <p>
+        Created at:
+        <time datetime="<%= post.createdAt %>"><%= post.createdAt %></time>
+    </p>
+
+    <% if (post.isUpdated) { %>
+    <p>
+        Updated at:
+        <time datetime="<%= post.updatedAt %>"><%= post.updatedAt %></time>
+    </p>
+    <% } %>
+
+    <div class="post_actions">
+        <a href="/posts/<%= post.id %>/edit">Edit</a>
+        <button
+            onclick="fetch('/posts/delete/<%= post.id %>', { method: 'DELETE' })"
+            href="/posts/delete/<%= post.id %>"
+        >
+            Delete
+        </button>
+    </div>
 </article>

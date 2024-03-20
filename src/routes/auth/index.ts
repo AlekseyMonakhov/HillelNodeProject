@@ -1,7 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import validate from "../../middlewares/validation";
+import { validateBody } from "../../middlewares/validation";
 import { loginUser, registerUser, logoutUser } from "../../controllers/auth";
+import { ApiRoutes } from "../../constants";
 
 const router = express.Router();
 
@@ -13,10 +14,10 @@ const authScema = z.object({
     }),
 });
 
-router.post("/login", validate(authScema), loginUser);
+router.post(ApiRoutes.LOGIN, validateBody(authScema), loginUser);
 
-router.post("/register", validate(authScema), registerUser);
+router.post(ApiRoutes.REGISTER, validateBody(authScema), registerUser);
 
-router.get("/logout", logoutUser);
+router.get(ApiRoutes.LOGOUT, logoutUser);
 
 export default router;

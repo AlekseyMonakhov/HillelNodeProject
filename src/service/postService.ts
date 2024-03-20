@@ -1,5 +1,5 @@
 import prisma from "../prismaClient";
-import { Prisma, Post } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 class PostService {
     async getAllPosts() {

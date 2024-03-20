@@ -1,10 +1,14 @@
 import express from "express";
-import pagesRouter from "./pages";
 import authRouter from "./auth";
+import pagesRouter from "./pages";
+import postRouter from "./posts";
+import { ApiRoutes } from "../constants";
+import isAuth from "../middlewares/isAuth";
 
 const router = express.Router();
 
 router.use(pagesRouter);
-router.use("/auth", authRouter);
+router.use(ApiRoutes.AUTH, authRouter);
+router.use(ApiRoutes.POSTS, isAuth, postRouter);
 
 export default router;

@@ -2,11 +2,9 @@ import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import routes from "./routes";
 import getUserFromCookie from "./middlewares/getUserFromCookie";
-import isUserAuth from "./middlewares/isUserAuth";
 import cookieParser from "cookie-parser";
 import errorHandler from "./controllers/error";
 import { NotFound } from "./errors";
-
 
 const app = express();
 
@@ -20,13 +18,10 @@ app.set("views", path.join(__dirname, "..", "src", "views"));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use(getUserFromCookie);
-app.use(isUserAuth);
 
 app.use(routes);
 
 app.all("*", (req: Request, res: Response, next: NextFunction) => {
-    console.log("Route not found");
-
     next(new NotFound("Route not found"));
 });
 

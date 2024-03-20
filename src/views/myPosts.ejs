@@ -19,29 +19,20 @@
     </head>
     <body>
         <%- include('partials/header') %>
-        
+
         <main class="my_posts">
             <h1>My Posts</h1>
             <section class="posts_container">
-                <% if (posts.length) { %>
-                    <% posts.forEach(post => { %>
-                        <% include('components/post', { post }) %>
-                    <% }) %>
-                <% } else { %>
-                    <div>
-                        <p>No posts yet</p>
-                        <button
-                            class="create_post_button"
-                        >
-                            Create Post
-                        </button>
-
-
-                        <dialog id="createPostDialog">
-                            <%- include('components/create_post') %>
-                        </dialog>
-                    </div>
-                <% } %>
+                <% if (posts.length) { %> <% posts.forEach(post => { %> <%-
+                include('components/post', { post }) %> <% }) %> <% }%>
             </section>
+            <div class="modal_container">
+                <button class="create_post_button">Create Post</button>
+
+                <dialog id="createPostDialog">
+                    <%- include('components/create_post') %>
+                </dialog>
+            </div>
+        </main>
     </body>
 </html>
