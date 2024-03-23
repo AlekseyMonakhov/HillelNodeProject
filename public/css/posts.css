@@ -38,6 +38,33 @@
             overflow: hidden;
             padding: 20px;
 
+            .post_title {
+                font-size: 1.5rem;
+            }
+
+            .post_content {
+                padding: 10px;
+                margin: 20px 0;
+            }
+
+            .post_title,
+            .post_content {
+                transition: padding 0.3s ease;
+            }
+
+            .post_title[contenteditable="true"],
+            .post_content[contenteditable="true"] {
+                border: 1px solid black;
+                padding: 10px;
+                border-radius: 5px;
+            }
+
+            .error {
+                color: red;
+                font-size: 0.9rem;
+                margin-top: 5px;
+            }
+
             time {
                 color: #6c757d;
                 font-size: 0.9rem;

@@ -1,11 +1,11 @@
-#createPostDialog[open] {
+#PostDialog[open] {
     position: relative;
     margin: auto;
     border: 1px solid rgb(125, 123, 123);
     border-radius: 10px;
     overflow: hidden;
 
-    .create_post {
+    .post_form {
         position: relative;
         overflow: hidden;
         display: grid;
@@ -88,6 +88,6 @@
     }
 }
 
-#createPostDialog::backdrop {
+#PostDialog::backdrop {
     background: rgba(0, 0, 0, 0.5);
 }

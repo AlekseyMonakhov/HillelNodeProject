@@ -17,4 +17,9 @@ export const enum ApiRoutes {
     CREATE_POST = "/create",
     UPDATE_POST = "/update/:id",
     DELETE_POST = "/delete/:id",
+
+    COMMENTS = "/comments",
+    CREATE_COMMENT = "/create/:postId",
+    UPDATE_COMMENT = "/update/:commentId",
+    DELETE_COMMENT = "/delete/:commentId",
 }

@@ -1,0 +1,30 @@
+<li class="comment">
+    <p class="comment_author">Author <%= comment.authorEmail %></p>
+    <p class="comment_content">Message: <%= comment.content %></p>
+    <p>
+        Created at:
+        <time datetime="<%= comment.createdAt %>"
+            ><%= comment.createdAt %></time
+        >
+    </p>
+    <% if (comment.isUpdated) { %>
+        <p>
+            Updated at:
+            <time datetime="<%= comment.updatedAt %>"
+                ><%= comment.updatedAt %></time
+            >
+        </p>
+    <% } %>
+
+    <% if (isEditable || comment.canDelete) { %>
+        <button
+            class="comment_delete"
+            data-comment-id="<%= comment.id %>"
+        >
+            Delete
+        </button>
+        <% } 
+    %>
+
+
+</li>

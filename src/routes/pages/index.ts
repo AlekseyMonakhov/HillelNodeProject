@@ -1,12 +1,26 @@
 import express from "express";
 const router = express.Router();
-import PostService from "../../service/postService";
 import { User } from "@prisma/client";
 import { PageRoutes } from "../../constants";
+import PostService from "../../service/postService";
+import { normalizePostComments } from "../../utils";
 
-router.get(PageRoutes.HOME, (req, res) => {
+router.get(PageRoutes.HOME, async (req, res) => {
     const isAuth = Boolean(req.user);
-    res.render("main", { title: "Home", isAuth });
+    const userId = req.user?.id;
+
+    const posts = await PostService.getAllPosts();
+    const normalizedPosts = await Promise.all(
+        posts.map((post) => normalizePostComments(post, userId))
+    );
+
+    res.render("main", {
+        title: "Home",
+        isAuth,
+        posts: normalizedPosts,
+        isEditable: false,
+        canAddComment: true,
+    });
 });
 
 router.get(PageRoutes.AUTH, (req, res) => {
@@ -22,22 +36,14 @@ router.get(PageRoutes.MY_POSTS, async (req, res) => {
     }
 
     const user = req.user as User;
-    const posts = await PostService.getPostsByAuthorId(user.id);
-
-    const normalizedPosts = posts.map((post) => {
-        const { authorId, ...rest } = post;
-        return {
-            ...rest,
-            createdAt: new Date(post.createdAt).toLocaleString(),
-            updatedAt: new Date(post.updatedAt).toLocaleString(),
-            isUpdated: new Date(post.updatedAt).getTime() !== new Date(post.createdAt).getTime(),
-        };
-    });
+    const posts = await PostService.getUserPostsWithComments(user.id);
 
     res.render("myPosts", {
         title: "My Posts",
         isAuth,
-        posts: normalizedPosts,
+        posts,
+        isEditable: true,
+        canAddComment: false,
     });
 });
 

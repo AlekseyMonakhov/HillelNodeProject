@@ -6,6 +6,7 @@ import { Prisma } from "@prisma/client";
 import { COOKIE } from "../enum";
 import { BadRequest, ServerError } from "../errors";
 import UserService from "../service/userService";
+import { PageRoutes } from "../constants";
 
 const cookieOptions: CookieOptions = {
     httpOnly: true,
@@ -53,7 +54,7 @@ export async function loginUser(
 
         res.status(200).json({
             message: "User registered successfully",
-            redirect: "/my-posts",
+            redirect: PageRoutes.MY_POSTS,
         });
     } catch (error) {
         console.log(error);
@@ -92,7 +93,7 @@ export async function registerUser(
 
         res.status(200).json({
             message: "User registered successfully",
-            redirect: "/my-posts",
+            redirect: PageRoutes.MY_POSTS,
         });
     } catch (error) {
         console.log(error);

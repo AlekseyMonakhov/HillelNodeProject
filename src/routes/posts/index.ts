@@ -4,7 +4,7 @@ import { validateBody, validateParams } from "../../middlewares/validation";
 import {
     createPost,
     getPosts,
-    getPost,
+    getPostById,
     updatePost,
     deletePost,
 } from "../../controllers/posts";
@@ -19,11 +19,11 @@ const PostParamSchema = z.object({
 
 router.get(ApiRoutes.GET_POSTS, getPosts);
 
-router.get(ApiRoutes.GET_POST, validateParams(PostParamSchema), getPost);
+router.get(ApiRoutes.GET_POST, validateParams(PostParamSchema), getPostById);
 
 router.post(ApiRoutes.CREATE_POST, validateBody(PostSchema), createPost);
 
-router.put(
+router.patch(
     ApiRoutes.UPDATE_POST,
     [validateParams(PostParamSchema), validateBody(PostSchema)],
     updatePost

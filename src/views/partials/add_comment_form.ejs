@@ -1,0 +1,19 @@
+<form
+    action="/comments/create/<%= postId %>"
+    method="post"
+    class="comment_form"
+>
+    <h2>Add comment</h2>
+
+    <label for="comment_content">Content:</label>
+    <textarea
+        class="comment_content"
+        id="comment_content"
+        name="content"
+        rows="4"
+        cols="40"
+        required
+    ></textarea>
+
+    <button type="submit">Add comment</button>
+</form>

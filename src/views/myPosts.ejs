@@ -11,9 +11,17 @@
             rel="stylesheet"
             href="/css/create_post_modal.css"
         />
+        <link
+            rel="stylesheet"
+            href="/css/comments.css"
+        />
 
         <script
             src="/js/post.js"
+            defer
+        ></script>
+        <script
+            src="/js/formsHandler.js"
             defer
         ></script>
     </head>
@@ -24,12 +32,16 @@
             <h1>My Posts</h1>
             <section class="posts_container">
                 <% if (posts.length) { %> <% posts.forEach(post => { %> <%-
-                include('components/post', { post }) %> <% }) %> <% }%>
+                    include('components/post', { post, isEditable }) %> <% }) %> <%
+                } else { %>
+                        <p>No posts yet</p>
+                    <% } 
+                %>
             </section>
             <div class="modal_container">
                 <button class="create_post_button">Create Post</button>
 
-                <dialog id="createPostDialog">
+                <dialog id="PostDialog">
                     <%- include('components/create_post') %>
                 </dialog>
             </div>

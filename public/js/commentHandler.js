@@ -1,0 +1,1 @@
+console.log('commentHandler.js loaded')

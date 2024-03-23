@@ -2,8 +2,8 @@
     id="<%= post.id %>"
     class="post"
 >
-    <h2><%= post.title %></h2>
-    <p><%= post.content %></p>
+    <h2 class="post_title"><%= post.title %></h2>
+    <p class="post_content"><%= post.content %></p>
 
     <p>
         Created at:
@@ -15,15 +15,27 @@
         Updated at:
         <time datetime="<%= post.updatedAt %>"><%= post.updatedAt %></time>
     </p>
+
     <% } %>
 
-    <div class="post_actions">
-        <a href="/posts/<%= post.id %>/edit">Edit</a>
-        <button
-            onclick="fetch('/posts/delete/<%= post.id %>', { method: 'DELETE' })"
-            href="/posts/delete/<%= post.id %>"
-        >
-            Delete
-        </button>
-    </div>
+    <details class="comments_container">
+        <summary>Comments</summary>
+        <ul class="comments_list">
+            <% if (post.comments && post.comments.length > 0) { %> 
+                <%
+                    post.comments.forEach(comment => { %> <%- include('comment', {comment }) %> <% }) %> 
+                <% } else { %>
+                    <li class="comment">No comments yet</li>
+                 <% }
+            %>
+        </ul>
+
+        <% if (canAddComment && isAuth) { %> 
+            <%- include('../partials/add_comment_form', { postId: post.id }) %>
+        <% } %>
+    </details>
+
+    <% if (isEditable) { %> 
+        <%- include('../partials/post_edit_actions', { post}) %> 
+    <% } %>
 </article>

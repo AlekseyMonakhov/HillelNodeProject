@@ -3,10 +3,27 @@
 <html lang="en">
     <head>
         <%- include('partials/head') %>
+        <link
+            rel="stylesheet"
+            href="/css/posts.css"
+        />
+        <link
+            rel="stylesheet"
+            href="/css/comments.css"
+        />
+        <script
+            src="/js/commentHandler.js"
+            defer
+        ></script>
     </head>
     <body>
         <%- include('partials/header') %>
-        <h1>Привет, мир!</h1>
-        <p>Это моя первая страница на Express и EJS.</p>
+        <main class="my_posts">
+            <h1>All Posts</h1>
+            <section class="posts_container">
+                <% if (posts.length) { %> <% posts.forEach(post => { %>
+                <%-include('components/post', { post }) %> <% }) %> <% }%>
+            </section>
+        </main>
     </body>
 </html>
