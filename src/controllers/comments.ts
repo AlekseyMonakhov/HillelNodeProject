@@ -58,10 +58,10 @@ export async function updateComment(req: Request, res: Response) {
 }
 
 export async function deleteComment(req: Request, res: Response) {
-    const { id } = req.body;
+    const { commentId } = req.params;
 
     try {
-        const comment = await CommentService.deleteComment(id);
+        const comment = await CommentService.deleteComment(commentId);
 
         if (!comment) {
             throw new NotFound("Comment not found");

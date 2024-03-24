@@ -4,6 +4,7 @@ import { User } from "@prisma/client";
 import { PageRoutes } from "../../constants";
 import PostService from "../../service/postService";
 import { normalizePostComments } from "../../utils";
+import userService from "../../service/userService";
 
 router.get(PageRoutes.HOME, async (req, res) => {
     const isAuth = Boolean(req.user);
@@ -36,25 +37,31 @@ router.get(PageRoutes.MY_POSTS, async (req, res) => {
     }
 
     const user = req.user as User;
-    const posts = await PostService.getUserPostsWithComments(user.id);
+    const posts = await PostService.getPostsByAuthorId(user.id);
+
+    const normalizedPosts = await Promise.all(
+        posts.map((post) => normalizePostComments(post, user.id))
+    );
 
     res.render("myPosts", {
         title: "My Posts",
         isAuth,
-        posts,
+        posts: normalizedPosts,
         isEditable: true,
         canAddComment: false,
     });
 });
 
-router.get(PageRoutes.ADMIN, (req, res) => {
+router.get(PageRoutes.ADMIN, async (req, res) => {
     const isAdmin = req.user?.role === "ADMIN";
 
     if (!isAdmin) {
         return res.redirect(PageRoutes.HOME);
     }
 
-    res.render("admin", { title: "Admin page", isAuth: true });
+    const users = await userService.getAllUsers();
+
+    res.render("admin", { title: "Admin page", isAuth: true, users });
 });
 
 export default router;

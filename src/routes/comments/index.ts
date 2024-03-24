@@ -20,20 +20,20 @@ const CommentParamSchema = z.object({
 });
 
 router.post(
-    ApiRoutes.CREATE_COMMENT,
+    ApiRoutes.COMMENTS_CREATE_COMMENT,
     [validateParams(PostParamSchema), validateBody(CommentSchema)],
     createComment
 );
 
 router.patch(
-    ApiRoutes.UPDATE_COMMENT,
+    ApiRoutes.COMMENTS_UPDATE_COMMENT,
     [validateParams(CommentParamSchema), validateBody(CommentSchema)],
     updateComment
 );
 
 router.delete(
-    ApiRoutes.DELETE_COMMENT,
-    validateBody(CommentParamSchema),
+    ApiRoutes.COMMENTS_DELETE_COMMENT,
+    validateParams(CommentParamSchema),
     deleteComment
 );
 

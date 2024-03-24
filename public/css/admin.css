@@ -1,0 +1,18 @@
+.admin {
+    h1 {
+        margin-bottom: 20px;
+        font-size: 2rem;
+        padding: 10px;
+    }
+    .user_item {
+        display: flex;
+        flex-flow: column nowrap;
+
+        padding: 10px;
+        gap: 10px;
+
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+}

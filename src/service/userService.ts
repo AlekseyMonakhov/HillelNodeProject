@@ -65,9 +65,28 @@ class UserService {
     }
 
     async getAllUsers() {
-        const users = await prisma.user.findMany();
+        const users = await prisma.user.findMany({
+            select: {
+                id: true,
+                email: true,
+                role: true,
+            },
+        });
 
         return users;
+    }
+
+    async makeAdmin(userId: string) {
+        const user = await prisma.user.update({
+            where: {
+                id: userId,
+            },
+            data: {
+                role: "ADMIN",
+            },
+        });
+
+        return user;
     }
 }
 

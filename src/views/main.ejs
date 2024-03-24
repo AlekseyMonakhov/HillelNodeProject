@@ -3,27 +3,25 @@
 <html lang="en">
     <head>
         <%- include('partials/head') %>
-        <link
-            rel="stylesheet"
-            href="/css/posts.css"
-        />
-        <link
-            rel="stylesheet"
-            href="/css/comments.css"
-        />
-        <script
-            src="/js/commentHandler.js"
-            defer
-        ></script>
+        <%- include('partials/postsHead') %>
     </head>
     <body>
         <%- include('partials/header') %>
         <main class="my_posts">
             <h1>All Posts</h1>
-            <section class="posts_container">
+            <section class="container">
                 <% if (posts.length) { %> <% posts.forEach(post => { %>
                 <%-include('components/post', { post }) %> <% }) %> <% }%>
             </section>
+            <% if (isAuth) { %>
+                <div class="modal_container">
+                    <button class="create_post_button">Create Post</button>
+
+                    <dialog id="PostDialog">
+                        <%- include('components/create_post') %>
+                    </dialog>
+                </div>
+            <% } %>
         </main>
     </body>
 </html>

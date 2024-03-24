@@ -1,6 +1,5 @@
 import { Post, Comment } from "@prisma/client";
 import CommentService from "../service/commentService";
-import UserService from "../service/userService";
 
 export async function normalizePostComments(
     post: Post,

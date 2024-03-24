@@ -3,9 +3,22 @@
 <html lang="en">
     <head>
         <%- include('partials/head') %>
+        <link rel="stylesheet" href="/css/admin.css">
+        <script src="/js/admin.js" defer></script>
     </head>
     <body>
         <%- include('partials/header') %>
+        <section class="admin">
         <h1>Admin page</h1>
+            <ul class="container">
+                <% users.forEach(user => { %>
+                    <li class="user_item">
+                        <p>Email: <%= user.email %></p>
+                        <p>Role: <%= user.role %></p>
+                        <button data-id="<%= user.id %>" class="delete_user">Delete</button>
+                    </li>
+                <% }) %>
+            </ul>
+        </section>
     </body>
 </html>

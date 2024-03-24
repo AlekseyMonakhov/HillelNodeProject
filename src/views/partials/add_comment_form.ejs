@@ -15,5 +15,11 @@
         required
     ></textarea>
 
-    <button type="submit">Add comment</button>
+    <input
+        type="hidden"
+        name="post_id"
+        value="<%= postId %>"
+    />
+
+    <button type="submit" class="add_comment">Add comment</button>
 </form>

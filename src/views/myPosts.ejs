@@ -3,34 +3,14 @@
 <html lang="en">
     <head>
         <%- include('partials/head') %>
-        <link
-            rel="stylesheet"
-            href="/css/posts.css"
-        />
-        <link
-            rel="stylesheet"
-            href="/css/create_post_modal.css"
-        />
-        <link
-            rel="stylesheet"
-            href="/css/comments.css"
-        />
-
-        <script
-            src="/js/post.js"
-            defer
-        ></script>
-        <script
-            src="/js/formsHandler.js"
-            defer
-        ></script>
+        <%- include('partials/postsHead') %>
     </head>
     <body>
         <%- include('partials/header') %>
 
         <main class="my_posts">
             <h1>My Posts</h1>
-            <section class="posts_container">
+            <section class="container">
                 <% if (posts.length) { %> <% posts.forEach(post => { %> <%-
                     include('components/post', { post, isEditable }) %> <% }) %> <%
                 } else { %>

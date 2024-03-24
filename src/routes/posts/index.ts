@@ -17,20 +17,24 @@ const PostParamSchema = z.object({
     id: z.string().uuid(),
 });
 
-router.get(ApiRoutes.GET_POSTS, getPosts);
+router.get(ApiRoutes.POSTS_GET_POSTS, getPosts);
 
-router.get(ApiRoutes.GET_POST, validateParams(PostParamSchema), getPostById);
+router.get(
+    ApiRoutes.POSTS_GET_POST,
+    validateParams(PostParamSchema),
+    getPostById
+);
 
-router.post(ApiRoutes.CREATE_POST, validateBody(PostSchema), createPost);
+router.post(ApiRoutes.POSTS_CREATE_POST, validateBody(PostSchema), createPost);
 
 router.patch(
-    ApiRoutes.UPDATE_POST,
+    ApiRoutes.POSTS_UPDATE_POST,
     [validateParams(PostParamSchema), validateBody(PostSchema)],
     updatePost
 );
 
 router.delete(
-    ApiRoutes.DELETE_POST,
+    ApiRoutes.POSTS_DELETE_POST,
     validateParams(PostParamSchema),
     deletePost
 );

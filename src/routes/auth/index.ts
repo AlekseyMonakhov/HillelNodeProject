@@ -14,10 +14,10 @@ const authScema = z.object({
     }),
 });
 
-router.post(ApiRoutes.LOGIN, validateBody(authScema), loginUser);
+router.post(ApiRoutes.AUTH_LOGIN, validateBody(authScema), loginUser);
 
-router.post(ApiRoutes.REGISTER, validateBody(authScema), registerUser);
+router.post(ApiRoutes.AUTH_REGISTER, validateBody(authScema), registerUser);
 
-router.get(ApiRoutes.LOGOUT, logoutUser);
+router.get(ApiRoutes.AUTH_LOGOUT, logoutUser);
 
 export default router;

@@ -63,19 +63,6 @@ class PostService {
 
         return posts;
     }
-
-    async getUserPostsWithComments(userId: string) {
-        const posts = await prisma.post.findMany({
-            where: {
-                authorId: userId,
-            },
-            include: {
-                comments: true,
-            },
-        });
-
-        return posts;
-    }
 }
 
 export default new PostService();

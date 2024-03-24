@@ -1,23 +1,10 @@
-const postContainer = document.querySelector('.my_posts');
-const dialog = document.querySelector('#PostDialog');
+const allPostContainer = document.querySelector('.my_posts');
 
 
 const postContentCash = new Map();
 
 
-postContainer.addEventListener("click", (event) => {
-    if (event.target.classList.contains('close_modal')) {
-        dialog.close();
-    }
-
-    if (event.target.classList.contains('create_post_button')) {
-        dialog.showModal();
-    }
-
-    if (event.target === dialog) {
-        dialog.close();
-    }
-
+allPostContainer.addEventListener("click", (event) => {
     if (event.target.classList.contains('delete_post')) {
         const postId = event.target.dataset.id;
 
@@ -98,6 +85,5 @@ postContainer.addEventListener("click", (event) => {
                 console.log(error);
             });
         }
-
     }
 })
