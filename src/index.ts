@@ -5,6 +5,7 @@ import getUserFromCookie from "./middlewares/getUserFromCookie";
 import cookieParser from "cookie-parser";
 import errorHandler from "./controllers/error";
 import { NotFound } from "./errors";
+const port = process.env.PORT || 3000;
 
 const app = express();
 
@@ -26,6 +27,6 @@ app.all("*", (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use(errorHandler);
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log("Server is running on port 3000");
 });
