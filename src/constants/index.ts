@@ -6,8 +6,6 @@ export const enum PageRoutes {
 }
 
 export const enum ApiRoutes {
-    HOST = "http://localhost:3000",
-
     AUTH = "/auth",
     AUTH_LOGIN = "/login",
     AUTH_REGISTER = "/register",
@@ -30,4 +28,8 @@ export const enum ApiRoutes {
     ADMIN = "/admin",
     ADMIN_GET_USERS = "/users",
     ADMIN_DELETE_USER = "/delete/:userId",
+}
+
+export const enum Cookie {
+    TOKEN = "token",
 }

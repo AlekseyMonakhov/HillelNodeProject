@@ -1,12 +1,10 @@
 import { CookieOptions, Request, Response, NextFunction } from "express";
-import prisma from "../prismaClient";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Prisma } from "@prisma/client";
-import { COOKIE } from "../enum";
 import { BadRequest, ServerError } from "../errors";
 import UserService from "../service/userService";
-import { PageRoutes } from "../constants";
+import { Cookie, PageRoutes } from "../constants";
 
 const cookieOptions: CookieOptions = {
     httpOnly: true,
@@ -50,7 +48,7 @@ export async function loginUser(
             { expiresIn: "1h" }
         );
 
-        res.cookie(COOKIE.TOKEN, token, cookieOptions);
+        res.cookie(Cookie.TOKEN, token, cookieOptions);
 
         res.status(200).json({
             message: "User registered successfully",
@@ -89,7 +87,7 @@ export async function registerUser(
             { expiresIn: "1h" }
         );
 
-        res.cookie(COOKIE.TOKEN, token, cookieOptions);
+        res.cookie(Cookie.TOKEN, token, cookieOptions);
 
         res.status(200).json({
             message: "User registered successfully",
@@ -119,7 +117,7 @@ export async function registerUser(
 
 export function logoutUser(req: Request, res: Response, next: NextFunction) {
     try {
-        res.clearCookie(COOKIE.TOKEN);
+        res.clearCookie(Cookie.TOKEN);
         res.redirect("/");
     } catch (error) {
         console.log(error);
