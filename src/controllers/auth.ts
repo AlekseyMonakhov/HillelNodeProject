@@ -20,7 +20,6 @@ export async function loginUser(
     const { email, password } = req.body;
     try {
         const user = await UserService.getUserByEmail(email);
-
         if (!user) {
             return next(
                 new BadRequest([
@@ -30,7 +29,6 @@ export async function loginUser(
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
-
         if (!isPasswordValid) {
             return next(
                 new BadRequest([
@@ -45,7 +43,7 @@ export async function loginUser(
                 role: user.role,
             },
             process.env.JWT_SECRET!,
-            { expiresIn: "1h" }
+            { expiresIn: "1h" } // better to have expiration time in env, but fine
         );
 
         res.cookie(Cookie.TOKEN, token, cookieOptions);
@@ -55,7 +53,6 @@ export async function loginUser(
             redirect: PageRoutes.MY_POSTS,
         });
     } catch (error) {
-        console.log(error);
         next(
             new ServerError("Ploblems while login user", (error as Error).stack)
         );
@@ -78,6 +75,7 @@ export async function registerUser(
             role: "USER",
         });
 
+        //! this token creation is the same you use in login and register. Extract to a function?
         const token = jwt.sign(
             {
                 id: user.id,
@@ -94,16 +92,12 @@ export async function registerUser(
             redirect: PageRoutes.MY_POSTS,
         });
     } catch (error) {
-        console.log(error);
-
-        if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            if (error.code === "P2002") {
-                return next(
-                    new BadRequest([
-                        { path: ["email"], message: "Email already exists" },
-                    ])
-                );
-            }
+        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+            return next(
+                new BadRequest([
+                    { path: ["email"], message: "Email already exists" },
+                ])
+            );
         }
 
         next(
@@ -120,7 +114,6 @@ export function logoutUser(req: Request, res: Response, next: NextFunction) {
         res.clearCookie(Cookie.TOKEN);
         res.redirect("/");
     } catch (error) {
-        console.log(error);
         next(
             new ServerError(
                 "Ploblems while logout user",
