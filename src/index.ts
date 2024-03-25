@@ -26,8 +26,8 @@ app.use(getUserFromCookie);
 
 app.use(routes);
 
-app.all("*", (_req: Request, _res: Response, next: NextFunction) => {
-    next(new NotFound("Route not found"));
+app.all("*", (req: Request, _res: Response, next: NextFunction) => {
+    next(new NotFound(`Route [${req.url}] not found`));
 });
 app.use(errorHandler);
 
