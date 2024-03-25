@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express from "express";
 import { z } from "zod";
 import { validateBody } from "../../middlewares/validation";
 import { loginUser, registerUser, logoutUser } from "../../controllers/auth";

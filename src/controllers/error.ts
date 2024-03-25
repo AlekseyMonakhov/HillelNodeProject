@@ -14,6 +14,8 @@ function errorHandler(
     res: Response,
     next: NextFunction
 ) {
+    console.log(error);
+
     if (error instanceof GeneralError) {
         if (error instanceof BadRequest) {
             return res.status(error.status).json(error.sendResponse());
